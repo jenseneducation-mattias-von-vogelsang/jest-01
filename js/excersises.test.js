@@ -5,9 +5,18 @@ const {
   capitalize,
   multiply,
   isWaterBoiling,
-  intToRoman
+  intToRoman,
+  setOrigin,
+  bookTrip,
+  goOnTrip,
+  getPosition,
+  DriverSystem
 } = script;
 
+// const {
+//   DriverSystem
+// } = require('./driverSystem.js');
+// jest.mock('./driverSystem.js')
 
 //*** Excersise 1 & 2 ***
 it('should store a number then return it(1)', () => {
@@ -104,7 +113,7 @@ it('checks if input sent to function gets thrown', () => {
 })
 
 //*** Excersise 6 ***/
-it("expect swingToRoman to return to roman numbers not numbers ", () => {
+it("expect intToRoman to return to roman numbers not numbers ", () => {
   //Arrange
   const number = "3";
   let actual = "III";
@@ -115,3 +124,103 @@ it("expect swingToRoman to return to roman numbers not numbers ", () => {
   //Assert
   expect(actual).toBe(expected);
 });
+
+//*** Excersise 7 ***/
+it("pass a origin(country) which is stored, returns true if origin == location", () => {
+  //Arrange
+  const origin = 'Sweden';
+  let actual = true;
+
+  //Act
+  let expected = setOrigin(origin);
+
+  //Assert
+  expect(actual).toBe(expected);
+})
+
+it("pass destination to book a trip. Returns false if origin is not stored or destination is not passed in parameter", () => {
+  //Arrange
+  const destination = 'England';
+  let actual = true;
+
+  //Act
+  let expected = bookTrip(destination);
+
+  //Assert
+  expect(actual).toBe(expected);
+})
+
+it("requires origin and destination values to be stored before calling, returns false if values are incorrect, error if both values doesnt exist", () => {
+  //throw error if origin || destination is not set
+  //Arrange
+  let actual = true;
+
+  //Act
+  let expected = goOnTrip();
+
+  //Assert
+  expect(actual).toBe(expected);
+})
+
+it("call function to get the stored origin, after trip has been made it makes (origin = destination)", () => {
+  //Arrange
+  let actual = 'Sweden';
+
+  //Act
+  let expected = getPosition();
+
+  //Assert
+  expect(actual).toBe(expected);
+})
+
+//*** Excersise 8 ***/
+//Create classinstance of DriverSystem
+const driverClass = new DriverSystem();
+it("pass and age and licensetype to a function to check if age is old enough to get that type of license, returns true if true", () => {
+  //Arrange
+  const ageYears = 18;
+  const licenseType = 'B';
+  let actual = true;
+
+  //Act
+  let expected = driverClass.canGet(licenseType, ageYears);
+
+  //Assert
+  expect(actual).toBe(expected);
+})
+
+it("pass and age and licensetype to a function to check if age is old enough to get that type of license, throw error for invalid licensetype", () => {
+  //Arrange
+  const ageYears = 18;
+  const licenseType = 'Ö';
+
+  //Act
+  let maybeError = () => driverClass.canGet(licenseType, ageYears);
+
+  //Assert
+  expect(maybeError).toThrow();
+})
+
+it("pass a number to set a new speedlimit", () => {
+  //Arrange
+  const newLimit = 180;
+  let actual = true;
+
+  //Act
+  let expected = driverClass.setSpeedLimit(newLimit);
+
+  //Assert
+  expect(actual).toBe(expected);
+})
+
+it("pass current speed to see if it exceeds current speedlimit, returns true or false", () => {
+  //Arrange
+  const speed = 140;
+  let actual = false;
+
+  //Act
+  let expected = driverClass.isSpeeding(speed);
+
+  //Assert
+  expect(actual).toBe(expected);
+})
